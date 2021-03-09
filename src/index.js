@@ -90,8 +90,22 @@ app.patch('/todos/:id/done', checksExistsUserAccount, (request, response) => {
 });
 
 app.delete('/todos/:id', checksExistsUserAccount, (request, response) => {
-  // Complete aqui
-});
+  const { id } = request.params;
+  const { user } = request;
 
+  const todo = user.todos.filter(function (el) {
+    return el.id == id;
+  });
+
+  if (todo.length === 0) {
+    return response.status(404).json({ error: "todo not found!" });
+  }
+  // indexOf() finds the todo position in the user.todos array
+  user.todos.splice(user.todos.indexOf(todo, 0), 1);
+
+  return response.status(202).send();
+
+
+});
 
 module.exports = app;
