@@ -60,7 +60,16 @@ app.post('/todos', checksExistsUserAccount, (request, response) => {
 });
 
 app.put('/todos/:id', checksExistsUserAccount, (request, response) => {
+  const { id } = request.params;
+  const { user } = request;
+  const { title, deadline } = request.body;
 
+  const todo = user.todos.filter(function (el) {
+    return el.id == id;
+  });
+  todo[0].title = title;
+  todo[0].deadline = new Date(deadline);
+  return response.send(todo);
 });
 
 app.patch('/todos/:id/done', checksExistsUserAccount, (request, response) => {
