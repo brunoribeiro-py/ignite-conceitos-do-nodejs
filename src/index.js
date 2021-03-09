@@ -54,11 +54,13 @@ app.post('/todos', checksExistsUserAccount, (request, response) => {
     deadline: new Date(deadline),
     created_at: new Date()
   }
+  user.todos.push(addTodo);
+
   return response.status(201).send()
 });
 
 app.put('/todos/:id', checksExistsUserAccount, (request, response) => {
-  // Complete aqui
+
 });
 
 app.patch('/todos/:id/done', checksExistsUserAccount, (request, response) => {
